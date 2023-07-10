@@ -10,7 +10,7 @@ function Home() {
       justifyContent="center"
       alignItems="center"
       h="100vh"
-      bgImage="url(public/homeBack.jpg)"
+      bgImage="url(/public/homeBack.jpg)"
       bgSize="cover"
     >
       <Link to="/catalogo">

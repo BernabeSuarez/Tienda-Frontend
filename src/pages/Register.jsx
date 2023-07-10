@@ -51,7 +51,7 @@ export default function Register() {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      bgImage="url(public/loginBack.jpg)"
+      bgImage="url(/public/loginBack.jpg)"
       bgSize="cover"
       justifyContent="center"
       alignItems="center"

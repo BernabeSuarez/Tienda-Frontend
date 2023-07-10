@@ -5,6 +5,7 @@ import Catalogo from "./pages/Catalogo";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </BrowserRouter>

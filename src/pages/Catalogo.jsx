@@ -8,6 +8,7 @@ function Catalogo() {
       <Navbar />
       <h2>About</h2>
       <Link to="/">Home</Link>
+      <Link to="/cart">tu Carrito</Link>
     </Flex>
   );
 }
