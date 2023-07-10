@@ -22,9 +22,10 @@ import { useNavigate } from "react-router-dom";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
-export default function Login() {
-  const { loginUser } = useAuth();
+export default function Register() {
+  const { createUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ export default function Login() {
 
   const login = async (e) => {
     e.preventDefault();
-    loginUser(email, password);
-    navigate("/about");
+    createUser(name, email, password);
+    navigate("/login");
   };
 
   return (
@@ -52,9 +53,9 @@ export default function Login() {
         alignItems="center"
       >
         <Avatar bg="teal.500" />
-        <Heading color="teal.400">Bienvenidos</Heading>
+        <Heading color="teal.400">Bienvenido</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
-          <form onSubmit={(e) => login(e, email, password)}>
+          <form onSubmit={(e) => login(e, name, email, password)}>
             <Stack
               spacing={4}
               p="1rem"
@@ -67,8 +68,20 @@ export default function Login() {
                     <CFaUserAlt color="gray.300" />
                   </InputLeftElement>
                   <Input
+                    type="text"
+                    placeholder="Nombre"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <CFaUserAlt color="gray.300" />
+                  </InputLeftElement>
+                  <Input
                     type="email"
-                    placeholder="Email"
+                    placeholder="Correo Electronico"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </InputGroup>
@@ -98,7 +111,7 @@ export default function Login() {
                 colorScheme="teal"
                 width="full"
               >
-                Login
+                Crear Usuario
               </Button>
             </Stack>
           </form>
@@ -106,9 +119,9 @@ export default function Login() {
       </Stack>
 
       <Box>
-        Aun no tienes cuenta?{" "}
-        <Link color="teal.500" to="/register">
-          Registrarse
+        Ya tienes Cuenta?{" "}
+        <Link color="teal.500" to="/login">
+          Ingresar
         </Link>
       </Box>
     </Flex>

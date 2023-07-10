@@ -4,7 +4,8 @@ import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
-const url = "http://localhost:8080/signin";
+const loginUrl = "http://localhost:8080/signin";
+const registerUrl = "http://localhost:8080/signup";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -18,9 +19,22 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
 
+  const createUser = async (name, email, password) => {
+    try {
+      const res = await axios.post(registerUrl, {
+        name,
+        email,
+        password,
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loginUser = async (email, password) => {
     try {
-      const res = await axios.post(url, {
+      const res = await axios.post(loginUrl, {
         email,
         password,
       });
@@ -38,7 +52,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logout, isAuth }}>
+    <AuthContext.Provider
+      value={{ user, loginUser, createUser, logout, isAuth }}
+    >
       {children}
     </AuthContext.Provider>
   );
