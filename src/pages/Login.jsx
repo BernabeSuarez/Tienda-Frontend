@@ -14,15 +14,18 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
+  Text,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export default function Login() {
+  const toast = useToast();
   const { loginUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -32,8 +35,15 @@ export default function Login() {
 
   const login = async (e) => {
     e.preventDefault();
-    loginUser(email, password);
-    navigate("/about");
+    await loginUser(email, password);
+    toast({
+      title: "Bienvenido!",
+      description: "Que alegria tenerlos en nuestra tienda",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    navigate("/catalogo");
   };
 
   return (
@@ -41,7 +51,8 @@ export default function Login() {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      bgImage="url(public/loginBack.jpg)"
+      bgSize="cover"
       justifyContent="center"
       alignItems="center"
     >
@@ -51,15 +62,16 @@ export default function Login() {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Bienvenidos</Heading>
+        <Avatar bg="black" />
+        <Heading color="black">Bienvenidos</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={(e) => login(e, email, password)}>
             <Stack
               spacing={4}
               p="1rem"
               backgroundColor="whiteAlpha.900"
-              boxShadow="md"
+              boxShadow="dark-lg"
+              borderRadius={12}
             >
               <FormControl>
                 <InputGroup>
@@ -95,8 +107,10 @@ export default function Login() {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                colorScheme="teal"
+                bg="black"
+                color="white"
                 width="full"
+                _hover={{ bg: "gray.600" }}
               >
                 Login
               </Button>
@@ -105,12 +119,16 @@ export default function Login() {
         </Box>
       </Stack>
 
-      <Box>
-        Aun no tienes cuenta?{" "}
-        <Link color="teal.500" to="/register">
-          Registrarse
+      <Flex
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text fontSize="sm">Aun no tienes cuenta?</Text>
+        <Link to="/register">
+          <Text fontSize="xl">Registrarse</Text>
         </Link>
-      </Box>
+      </Flex>
     </Flex>
   );
 }

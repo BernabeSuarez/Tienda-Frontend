@@ -15,8 +15,9 @@ import {
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -30,10 +31,18 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleShowClick = () => setShowPassword(!showPassword);
+  const toast = useToast();
 
   const login = async (e) => {
     e.preventDefault();
-    createUser(name, email, password);
+    await createUser(name, email, password);
+    toast({
+      title: "Bienvenido!",
+      description: "Que alegria tenerlos en nuestra tienda",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
     navigate("/login");
   };
 
@@ -42,7 +51,8 @@ export default function Register() {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      bgImage="url(public/loginBack.jpg)"
+      bgSize="cover"
       justifyContent="center"
       alignItems="center"
     >
@@ -52,8 +62,8 @@ export default function Register() {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Bienvenido</Heading>
+        <Avatar bg="black" />
+        <Heading color="black">Bienvenido</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={(e) => login(e, name, email, password)}>
             <Stack
@@ -108,22 +118,23 @@ export default function Register() {
                 borderRadius={0}
                 type="submit"
                 variant="solid"
-                colorScheme="teal"
+                bg="black"
+                color="white"
                 width="full"
+                _hover={{ bg: "gray.600" }}
               >
                 Crear Usuario
               </Button>
             </Stack>
           </form>
         </Box>
+        <Box>
+          Ya tienes Cuenta?{" "}
+          <Link color="teal.500" to="/login">
+            Ingresar
+          </Link>
+        </Box>
       </Stack>
-
-      <Box>
-        Ya tienes Cuenta?{" "}
-        <Link color="teal.500" to="/login">
-          Ingresar
-        </Link>
-      </Box>
     </Flex>
   );
 }
