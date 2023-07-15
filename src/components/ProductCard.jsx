@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
       <CardBody overflow="hiden">
         <Box overflow="hidden">
           <Image
-            src={product.img}
+            src="fotico" //{product.img}
             alt={product.name}
             borderRadius="lg"
             objectFit="cover"

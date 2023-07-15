@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { Flex, Grid, GridItem } from "@chakra-ui/react";
 
-const productsUrl = "http://localhost:8080/products";
+const productsUrl = "https://backend-tienda-nucba.vercel.app/products";
 
 function Catalogo() {
   const [dataProd, setDataProd] = useState([]);
