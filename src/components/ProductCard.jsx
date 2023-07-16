@@ -13,9 +13,29 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ProductModal from "./ProductModal";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 export default function ProductCard({ product }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [cart, setCart] = useContext(CartContext);
+
+  const addCart = () => {
+    setCart((currentItem) => {
+      const itemFound = currentItem.find((item) => item.id === product.id);
+      if (itemFound) {
+        return currentItem.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity + 1 };
+          } else {
+            return item;
+          }
+        });
+      } else {
+        return [...currentItem, { quantity: 1, product }];
+      }
+    });
+  };
   return (
     <>
       <Card
@@ -24,7 +44,7 @@ export default function ProductCard({ product }) {
         _hover={{ transform: "scale(1.05)" }}
       >
         <CardBody overflow="hiden">
-          <Box overflow="hidden">
+          <Box overflow="hidden" key={product.id}>
             <Image
               src="fotico" //{product.img}
               alt={product.name}
@@ -49,7 +69,7 @@ export default function ProductCard({ product }) {
             <Button variant="solid" colorScheme="blue" onClick={onOpen}>
               Detalle
             </Button>
-            <Button variant="ghost" colorScheme="blue">
+            <Button variant="ghost" colorScheme="blue" onClick={addCart}>
               Agregar al Carrito
             </Button>
           </ButtonGroup>

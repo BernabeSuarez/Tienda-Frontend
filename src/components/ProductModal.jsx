@@ -14,7 +14,10 @@ export default function ProductModal({ isOpen, onClose, product }) {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay
+          bg="rgba(0,0,0,0.5)"
+          backdropFilter="blur(4px) hue-rotate(150deg)"
+        />
         <ModalContent p={4}>
           <ModalHeader>{product.name}</ModalHeader>
           <ModalCloseButton />
