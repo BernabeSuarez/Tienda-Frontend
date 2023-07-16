@@ -8,7 +8,7 @@ const loginUrl = "https://backend-tienda-nucba.vercel.app/signin";
 const registerUrl = "https://backend-tienda-nucba.vercel.app/signup";
 
 //expires cookie test
-const tiempo = new Date(new Date().getTime() + 1 * 60 * 1000);
+const tiempo = new Date(new Date().getTime() + 15 * 60 * 1000);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
