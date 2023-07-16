@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Skeleton } from "@chakra-ui/react";
 
 const productsUrl = "https://backend-tienda-nucba.vercel.app/products";
 
 function Catalogo() {
   const [dataProd, setDataProd] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // fetch data
@@ -16,6 +16,7 @@ function Catalogo() {
 
       // set state when the data received
       setDataProd(data);
+      setIsLoading(false);
     };
 
     dataFetch();
@@ -23,17 +24,26 @@ function Catalogo() {
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
-      <Navbar />
-      <h2>About</h2>
+      <h2>Catalogo de Productos</h2>
       <Link to="/">Home</Link>
-      <Link to="/cart">tu Carrito</Link>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6} w="80%">
-        {dataProd.map((prod) => (
-          <GridItem w="100%" key={prod.id}>
-            <ProductCard product={prod} />
-          </GridItem>
-        ))}
-      </Grid>
+      {isLoading ? (
+        <Grid templateColumns="repeat(3, 1fr)" gap={6} w="100%">
+          <Skeleton height="250px" width="280px" />
+          <Skeleton height="250px" width="280px" />
+          <Skeleton height="250px" width="280px" />
+          <Skeleton height="250px" width="280px" />
+          <Skeleton height="250px" width="280px" />
+          <Skeleton height="250px" width="280px" />
+        </Grid>
+      ) : (
+        <Grid templateColumns="repeat(3, 1fr)" gap={6} w="100%">
+          {dataProd.map((prod) => (
+            <GridItem w="100%" key={prod.id}>
+              <ProductCard product={prod} />
+            </GridItem>
+          ))}
+        </Grid>
+      )}
     </Flex>
   );
 }
