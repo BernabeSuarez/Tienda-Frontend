@@ -5,7 +5,7 @@ import Catalogo from "./pages/Catalogo";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Cart from "./pages/Cart";
+import RootLayout from "./components/Rootlayout";
 
 function App() {
   return (
@@ -16,8 +16,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/catalogo" element={<Catalogo />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route element={<RootLayout />}>
+              <Route path="/catalogo" element={<Catalogo />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
