@@ -20,22 +20,24 @@ export default function ProductCard({ product }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [cart, setCart] = useContext(CartContext);
 
-  const addCart = () => {
-    setCart((currentItem) => {
-      const itemFound = currentItem.find((item) => item.id === product.id);
-      if (itemFound) {
-        return currentItem.map((item) => {
-          if (item.id === product.id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
-          }
+  const addCart = (product) => {
+    setCart((currentItems) => {
+      const existingCartItem = currentItems.find(
+        (cartItem) => cartItem._id === product._id
+      );
+
+      if (existingCartItem) {
+        return currentItems.map((cartItem) => {
+          return cartItem._id === product._id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 } //si existe agrega uno a la cantidad del mismo item
+            : cartItem;
         });
-      } else {
-        return [...currentItem, { quantity: 1, product }];
       }
+      return [...currentItems, { ...product, quantity: 1 }]; // si no existe suma el nuevo item
     });
   };
+  localStorage.setItem("cart", JSON.stringify(cart));
+
   return (
     <>
       <Card
@@ -69,7 +71,11 @@ export default function ProductCard({ product }) {
             <Button variant="solid" colorScheme="blue" onClick={onOpen}>
               Detalle
             </Button>
-            <Button variant="ghost" colorScheme="blue" onClick={addCart}>
+            <Button
+              variant="ghost"
+              colorScheme="blue"
+              onClick={() => addCart(product)}
+            >
               Agregar al Carrito
             </Button>
           </ButtonGroup>

@@ -5,7 +5,6 @@ import {
   Image,
   Spacer,
   useDisclosure,
-  chakra,
 } from "@chakra-ui/react";
 import { BsCart3, BsSearch } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
