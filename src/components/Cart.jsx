@@ -8,11 +8,14 @@ import {
   DrawerCloseButton,
   Button,
   Table,
+  Th,
   Td,
   Tr,
   Tbody,
   IconButton,
   ButtonGroup,
+  Text,
+  Spacer,
 } from "@chakra-ui/react";
 import { formatPrice } from "../utils/formatPrice";
 import { useCart } from "../context/useCart";
@@ -20,7 +23,7 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
 export default function Cart({ isOpen, onClose }) {
   const { cart, removeToCart, addCart, cleanCart } = useCart();
-  console.log(cart);
+
   const TotalItems = cart.reduce(
     (acc, curr) => acc + curr.quantity * curr.price,
     0
@@ -33,67 +36,85 @@ export default function Cart({ isOpen, onClose }) {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Carrito de compras</DrawerHeader>
-
           <DrawerBody>
-            <Table
-              w="full"
-              bg="white"
-              _dark={{ bg: "gray.800" }}
-              display={{
-                base: "block",
-                md: "table",
-              }}
-              sx={{
-                "@media print": {
-                  display: "table",
-                },
-              }}
-            >
-              <Tbody
+            {cart.length === 0 ? (
+              <h2>No hay Nada aun...</h2>
+            ) : (
+              <Table
+                w="full"
+                bg="white"
+                _dark={{ bg: "gray.800" }}
                 display={{
                   base: "block",
-                  lg: "table-row-group",
+                  md: "table",
                 }}
                 sx={{
                   "@media print": {
-                    display: "table-row-group",
+                    display: "table",
                   },
                 }}
               >
-                {cart.map((item) => (
-                  <Tr key={item.id}>
-                    <Td>{item.name}</Td>
-                    <Td>Cant: {item.quantity}</Td>
-                    <Td>{formatPrice(item.price * item.quantity)}</Td>
-
-                    <Td>
-                      <ButtonGroup variant="solid" size="sm" spacing={3}>
-                        <IconButton
-                          variant="outline"
-                          colorScheme="teal"
-                          icon={<AiOutlinePlusCircle />}
-                          aria-label="Up"
-                          onClick={() => addCart(item)}
-                        />
-                        <IconButton
-                          variant="outline"
-                          colorScheme="teal"
-                          icon={<AiOutlineMinusCircle />}
-                          aria-label="Edit"
-                          onClick={() => removeToCart(item)}
-                        />
-                      </ButtonGroup>
-                    </Td>
+                <Tbody
+                  display={{
+                    base: "block",
+                    lg: "table-row-group",
+                  }}
+                  sx={{
+                    "@media print": {
+                      display: "table-row-group",
+                    },
+                  }}
+                >
+                  <Tr>
+                    <Th>Producto</Th>
+                    <Th>Precio Total</Th>
+                    <Th>Cantidad</Th>
+                    <Th>Agregar/Quitar</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-            <Button onClick={() => cleanCart()}>Limpiar Carro</Button>
-            <h2>Total: {formatPrice(TotalItems)} </h2>
+                  {cart.map((item) => (
+                    <Tr key={item.id}>
+                      <Td>{item.name}</Td>
+                      <Td>{formatPrice(item.price * item.quantity)}</Td>
+
+                      <Td>{item.quantity}</Td>
+                      <Td>
+                        <ButtonGroup variant="solid" size="sm" spacing={3}>
+                          <IconButton
+                            variant="outline"
+                            colorScheme="teal"
+                            icon={<AiOutlinePlusCircle />}
+                            aria-label="Up"
+                            onClick={() => addCart(item)}
+                          />
+                          <IconButton
+                            variant="outline"
+                            colorScheme="teal"
+                            icon={<AiOutlineMinusCircle />}
+                            aria-label="Edit"
+                            onClick={() => removeToCart(item)}
+                          />
+                        </ButtonGroup>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            )}
           </DrawerBody>
 
           <DrawerFooter>
-            <h3>Footer del carrito</h3>
+            {cart.length > 0 ? (
+              <ButtonGroup>
+                <Button colorScheme="red" onClick={() => cleanCart()}>
+                  Limpiar Carro
+                </Button>
+                <Button variant="outline" colorScheme="cyan">
+                  Confirmar compra
+                </Button>
+              </ButtonGroup>
+            ) : null}
+            <Spacer />
+            <Text>Total a pagar: {formatPrice(TotalItems)} </Text>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
