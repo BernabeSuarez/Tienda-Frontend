@@ -6,11 +6,12 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Button,
 } from "@chakra-ui/react";
 import { useCart } from "../context/useCart";
 
 export default function Cart({ isOpen, onClose }) {
-  const { cart } = useCart();
+  const { cart, removeToCart, addCart, cleanCart } = useCart();
   console.log(cart);
 
   return (
@@ -26,8 +27,11 @@ export default function Cart({ isOpen, onClose }) {
               <div key={item.id}>
                 <h2>{item.name}</h2>
                 <h4>cant: {item.quantity}</h4>
+                <Button onClick={() => addCart(item)}>+</Button>
+                <Button onClick={() => removeToCart(item)}>-</Button>
               </div>
             ))}
+            <Button onClick={() => cleanCart()}>Limpiar Carro</Button>
           </DrawerBody>
 
           <DrawerFooter>
