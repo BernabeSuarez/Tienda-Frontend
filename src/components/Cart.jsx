@@ -7,11 +7,10 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useCart } from "../context/useCart";
 
 export default function Cart({ isOpen, onClose }) {
-  const [cart, setCart] = useContext(CartContext);
+  const { cart } = useCart();
   console.log(cart);
 
   return (

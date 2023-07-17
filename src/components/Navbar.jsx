@@ -9,12 +9,11 @@ import {
 import { BsCart3, BsSearch } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import Cart from "./Cart";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useCart } from "../context/useCart";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cart, setCart] = useContext(CartContext);
+  const { cart } = useCart();
 
   const quantity = cart.reduce((acc, curr) => acc + curr.quantity, 0);
 

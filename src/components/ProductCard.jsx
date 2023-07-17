@@ -13,29 +13,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ProductModal from "./ProductModal";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useCart } from "../context/useCart";
 
 export default function ProductCard({ product }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cart, setCart] = useContext(CartContext);
+  const { addCart, cart } = useCart();
 
-  const addCart = (product) => {
-    setCart((currentItems) => {
-      const existingCartItem = currentItems.find(
-        (cartItem) => cartItem._id === product._id
-      );
-
-      if (existingCartItem) {
-        return currentItems.map((cartItem) => {
-          return cartItem._id === product._id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 } //si existe agrega uno a la cantidad del mismo item
-            : cartItem;
-        });
-      }
-      return [...currentItems, { ...product, quantity: 1 }]; // si no existe suma el nuevo item
-    });
-  };
   localStorage.setItem("cart", JSON.stringify(cart));
 
   return (
