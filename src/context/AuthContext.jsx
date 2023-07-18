@@ -4,8 +4,8 @@ import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
-const loginUrl = "https://backend-tienda-nucba.vercel.app/signin";
-const registerUrl = "https://backend-tienda-nucba.vercel.app/signup";
+const loginUrl = "https://backend-tienda-nucba.onrender.com/signin";
+const registerUrl = "https://backend-tienda-nucba.onrender.com/signup";
 
 //expires cookie test
 const tiempo = new Date(new Date().getTime() + 15 * 60 * 1000);

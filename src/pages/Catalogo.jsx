@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { Flex, Grid, GridItem, Skeleton } from "@chakra-ui/react";
 
-const productsUrl = "https://backend-tienda-nucba.vercel.app/products";
+const productsUrl = "https://backend-tienda-nucba.onrender.com/products";
 
 function Catalogo() {
   const [dataProd, setDataProd] = useState([]);

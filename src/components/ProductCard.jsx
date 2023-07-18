@@ -31,7 +31,7 @@ export default function ProductCard({ product }) {
         <CardBody overflow="hiden">
           <Box overflow="hidden" key={product.id}>
             <Image
-              src="fotico" //{product.img}
+              src={product.img.secure_url}
               alt={product.name}
               borderRadius="lg"
               objectFit="cover"
