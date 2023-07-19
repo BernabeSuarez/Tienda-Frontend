@@ -19,15 +19,23 @@ import {
 } from "@chakra-ui/react";
 import { formatPrice } from "../utils/formatPrice";
 import { useCart } from "../context/useCart";
+import { useAuth } from "../context/useAuth";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
 export default function Cart({ isOpen, onClose }) {
-  const { cart, removeToCart, addCart, cleanCart } = useCart();
+  const { cart, removeToCart, addCart, cleanCart, createOrder } = useCart();
+  const { user } = useAuth();
 
   const TotalItems = cart.reduce(
     (acc, curr) => acc + curr.quantity * curr.price,
     0
   );
+
+  const confirmarCompra = async () => {
+    await createOrder(user, cart, TotalItems);
+    alert("Orden creada"); //aca va un toast
+    cleanCart();
+  };
 
   return (
     <>
@@ -108,7 +116,11 @@ export default function Cart({ isOpen, onClose }) {
                 <Button colorScheme="red" onClick={() => cleanCart()}>
                   Limpiar Carro
                 </Button>
-                <Button variant="outline" colorScheme="cyan">
+                <Button
+                  variant="outline"
+                  colorScheme="cyan"
+                  onClick={confirmarCompra()}
+                >
                   Confirmar compra
                 </Button>
               </ButtonGroup>
