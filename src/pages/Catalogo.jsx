@@ -38,7 +38,7 @@ function Catalogo() {
       ) : (
         <Grid templateColumns="repeat(3, 1fr)" gap={6} w="100%">
           {dataProd.map((prod) => (
-            <GridItem w="100%" key={prod.id}>
+            <GridItem w="70%" h="70%" key={prod.id}>
               <ProductCard product={prod} />
             </GridItem>
           ))}

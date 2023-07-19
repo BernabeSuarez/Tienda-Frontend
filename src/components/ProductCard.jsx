@@ -23,11 +23,7 @@ export default function ProductCard({ product }) {
 
   return (
     <>
-      <Card
-        maxW="sm"
-        transition="0.5s ease"
-        _hover={{ transform: "scale(1.05)" }}
-      >
+      <Card maxW="sm" transition="0.5s ease">
         <CardBody overflow="hiden">
           <Box overflow="hidden" key={product.id}>
             <Image
@@ -36,21 +32,21 @@ export default function ProductCard({ product }) {
               borderRadius="lg"
               objectFit="cover"
               transition="0.5s ease"
-              filter="contrast(80%)"
-              _hover={{ transform: "scale(1.2)" }}
+              filter="grayscale(55%)"
+              _hover={{ transform: "scale(1.2)", filter: "grayscale(0%)" }}
             />
           </Box>
-          <Stack mt="6" spacing="3">
+          <Stack mt="2" spacing="1">
             <Heading size="md">{product.name}</Heading>
             <Text>{product.description}</Text>
-            <Text color="blue.600" fontSize="2xl">
+            <Text color="blue.600" fontSize="xl">
               ${product.price}
             </Text>
           </Stack>
         </CardBody>
         <Divider />
         <CardFooter>
-          <ButtonGroup spacing="2">
+          <ButtonGroup spacing="1">
             <Button variant="solid" colorScheme="blue" onClick={onOpen}>
               Detalle
             </Button>
