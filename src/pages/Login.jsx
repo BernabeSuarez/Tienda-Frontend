@@ -16,7 +16,7 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
+
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export default function Login() {
-  const toast = useToast();
   const { loginUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -36,13 +35,6 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     await loginUser(email, password);
-    toast({
-      title: "Bienvenido!",
-      description: "Que alegria tenerlos en nuestra tienda",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
     navigate("/catalogo");
   };
 
