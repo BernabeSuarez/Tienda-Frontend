@@ -7,11 +7,13 @@ import {
   Text,
   Button,
   ButtonGroup,
+  IconButton,
   Divider,
   CardFooter,
   Box,
   useDisclosure,
 } from "@chakra-ui/react";
+import { BsFillCartPlusFill } from "react-icons/bs";
 import ProductModal from "./ProductModal";
 import { useCart } from "../context/useCart";
 
@@ -23,10 +25,18 @@ export default function ProductCard({ product }) {
 
   return (
     <>
-      <Card maxW="sm" transition="0.5s ease">
+      <Card
+        size="sm"
+        transition="0.5s ease"
+        colorScheme="blackAlpha"
+        bg="blackAlpha.300"
+        variant="outline"
+        align="center"
+      >
         <CardBody overflow="hiden">
           <Box overflow="hidden" key={product.id}>
             <Image
+              boxSize="100%"
               src={product.img.secure_url}
               alt={product.name}
               borderRadius="lg"
@@ -38,25 +48,23 @@ export default function ProductCard({ product }) {
           </Box>
           <Stack mt="2" spacing="1">
             <Heading size="md">{product.name}</Heading>
-            <Text>{product.description}</Text>
-            <Text color="blue.600" fontSize="xl">
+            <Text color="black.600" fontSize="xl">
               ${product.price}
             </Text>
           </Stack>
         </CardBody>
         <Divider />
         <CardFooter>
-          <ButtonGroup spacing="1">
+          <ButtonGroup>
             <Button variant="solid" colorScheme="blue" onClick={onOpen}>
               Detalle
             </Button>
-            <Button
-              variant="ghost"
+            <IconButton
+              variant="outline"
               colorScheme="blue"
               onClick={() => addCart(product)}
-            >
-              Agregar al Carrito
-            </Button>
+              icon={<BsFillCartPlusFill />}
+            ></IconButton>
           </ButtonGroup>
         </CardFooter>
       </Card>

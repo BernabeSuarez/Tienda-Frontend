@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-import { Flex, Grid, GridItem, Skeleton } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Heading, Skeleton } from "@chakra-ui/react";
 
 const productsUrl = "https://backend-tienda-nucba.onrender.com/products";
 
@@ -31,9 +30,11 @@ function Catalogo() {
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
-      <h2>Catalogo de Productos</h2>
-      <Link to="/">Home</Link>
-      <select onChange={(event) => setSelect(event.target.value)}>
+      <Heading marginBottom="1rem">Catalogo de Productos</Heading>
+      <select
+        onChange={(event) => setSelect(event.target.value)}
+        style={{ marginBottom: "2rem" }}
+      >
         <option value="" selected disabled hidden>
           CATALOGO
         </option>
@@ -44,7 +45,11 @@ function Catalogo() {
         <option value="">CATALOGO COMPLETO</option>
       </select>
       {isLoading ? (
-        <Grid templateColumns="repeat(3, 1fr)" gap={6} w="100%">
+        <Grid
+          templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+          gap={6}
+          w="100%"
+        >
           <Skeleton height="250px" width="280px" />
           <Skeleton height="250px" width="280px" />
           <Skeleton height="250px" width="280px" />
@@ -53,9 +58,13 @@ function Catalogo() {
           <Skeleton height="250px" width="280px" />
         </Grid>
       ) : (
-        <Grid templateColumns="repeat(3, 1fr)" gap={6} w="100%">
+        <Grid
+          templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+          gap={6}
+          w="full"
+        >
           {productsItems.map((prod) => (
-            <GridItem w="70%" h="70%" key={prod.id}>
+            <GridItem w="100%" h="40%" key={prod.id}>
               <ProductCard product={prod} />
             </GridItem>
           ))}

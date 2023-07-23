@@ -1,19 +1,24 @@
 import {
   Flex,
+  Text,
   Icon,
   Box,
   Image,
   Spacer,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
-import { BsCart3, BsSearch } from "react-icons/bs";
-import { BiUser } from "react-icons/bi";
+import { BsCart3 } from "react-icons/bs";
 import Cart from "./Cart";
 import { useCart } from "../context/useCart";
+import { useAuth } from "../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { cart } = useCart();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const quantity = cart.reduce((acc, curr) => acc + curr.quantity, 0);
 
@@ -27,13 +32,29 @@ export default function Navbar() {
       justifyContent="space-evenly"
       alignItems="center"
     >
-      <Box w="30%">
+      <Box
+        w="30%"
+        onClick={() => navigate("/catalogo")}
+        _hover={{ cursor: "pointer" }}
+      >
         <Image src="img/logoTienda.png" alt="Logo" w="250px" />
       </Box>
       <Spacer />
-      <Flex justifyContent="space-between" alignItems="center" w="10%">
-        <Icon as={BsSearch} _hover={{ cursor: "pointer" }} />
-        <Icon as={BiUser} _hover={{ cursor: "pointer" }} />
+
+      <Flex justifyContent="space-between" alignItems="center" w="20%">
+        {user ? (
+          <>
+            <Text>Hola! {user.name}</Text>
+            <Button
+              onClick={() => logout()}
+              colorScheme="teal"
+              variant="outline"
+              size="sm"
+            >
+              Salir
+            </Button>
+          </>
+        ) : null}
         <Box pos="relative" display="inline-block">
           <Icon as={BsCart3} _hover={{ cursor: "pointer" }} onClick={onOpen} />
           <Box

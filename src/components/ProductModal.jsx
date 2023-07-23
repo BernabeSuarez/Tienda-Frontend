@@ -28,9 +28,8 @@ export default function ProductModal({ isOpen, onClose, product }) {
           </Text>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Comprar
+              Agregar al carrito
             </Button>
-            <Button variant="ghost">Agregar al carrito</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

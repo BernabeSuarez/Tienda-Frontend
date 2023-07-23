@@ -16,15 +16,19 @@ import {
   ButtonGroup,
   Text,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
 import { formatPrice } from "../utils/formatPrice";
 import { useCart } from "../context/useCart";
 import { useAuth } from "../context/useAuth";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart({ isOpen, onClose }) {
   const { cart, removeToCart, addCart, cleanCart, createOrder } = useCart();
   const { user } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const TotalItems = cart.reduce(
     (acc, curr) => acc + curr.quantity * curr.price,
@@ -32,9 +36,18 @@ export default function Cart({ isOpen, onClose }) {
   );
 
   const confirmarCompra = async () => {
+    //primero pagar con mercadopago en un modal  y luego cargar la order
     await createOrder(user, cart, TotalItems);
-    alert("Orden creada"); //aca va un toast
+    toast({
+      title: "Orden creada",
+      description: "Gracias por comprar en Tienda Online",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
     cleanCart();
+    onClose();
+    navigate("/payment");
   };
 
   return (
@@ -119,7 +132,7 @@ export default function Cart({ isOpen, onClose }) {
                 <Button
                   variant="outline"
                   colorScheme="cyan"
-                  onClick={confirmarCompra()}
+                  onClick={() => confirmarCompra()}
                 >
                   Confirmar compra
                 </Button>

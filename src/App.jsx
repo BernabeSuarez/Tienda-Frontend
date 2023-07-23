@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import RootLayout from "./components/Rootlayout";
 import { ShoppingCartProvider } from "./context/CartContext";
+import Payment from "./pages/Payment";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<RootLayout />}>
                 <Route path="/catalogo" element={<Catalogo />} />
+                <Route path="/payment" element={<Payment />} />
               </Route>
             </Route>
           </Routes>
