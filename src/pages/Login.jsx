@@ -43,7 +43,7 @@ export default function Login() {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      bgImage="url(/public/loginBack.jpg)"
+      bgImage="url(/loginBack.jpg)"
       bgSize="cover"
       justifyContent="center"
       alignItems="center"
