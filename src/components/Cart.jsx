@@ -22,13 +22,14 @@ import { formatPrice } from "../utils/formatPrice";
 import { useCart } from "../context/useCart";
 import { useAuth } from "../context/useAuth";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export default function Cart({ isOpen, onClose }) {
-  const { cart, removeToCart, addCart, cleanCart, createOrder } = useCart();
+  const { cart, removeToCart, addCart, cleanCart, createOrder, payOrder } =
+    useCart();
   const { user } = useAuth();
   const toast = useToast();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const TotalItems = cart.reduce(
     (acc, curr) => acc + curr.quantity * curr.price,
@@ -36,18 +37,22 @@ export default function Cart({ isOpen, onClose }) {
   );
 
   const confirmarCompra = async () => {
-    //primero pagar con mercadopago en un modal  y luego cargar la order
+    await payOrder({
+      title: user.name,
+      unit_price: TotalItems,
+      description: `Pedido realizado por: ${user.email}`,
+      category_id: user._id,
+    }).then(
+      toast({
+        title: "Orden creada",
+        description: "Gracias por comprar en Tienda Online",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      })
+    );
     await createOrder(user, cart, TotalItems);
-    toast({
-      title: "Orden creada",
-      description: "Gracias por comprar en Tienda Online",
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-    });
-    cleanCart();
-    onClose();
-    navigate("/payment");
+    //primero pagar con mercadopago en un modal  y luego cargar la order
   };
 
   return (

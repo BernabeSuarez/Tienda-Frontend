@@ -4,6 +4,7 @@ import axios from "axios";
 export const CartContext = createContext();
 
 const orderUrl = "https://backend-tienda-nucba.onrender.com/order";
+const payUrl = "https://backend-tienda-nucba.onrender.com/payment";
 
 export const ShoppingCartProvider = ({ children }) => {
   const [cart, setCart] = useState(
@@ -69,9 +70,24 @@ export const ShoppingCartProvider = ({ children }) => {
     }
   };
 
+  const payOrder = async (order) => {
+    axios
+      .post(payUrl, order)
+      .then((res) => (window.location.href = res.data.response.body.init_point))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addCart, removeToCart, cleanCart, createOrder }}
+      value={{
+        cart,
+        setCart,
+        addCart,
+        removeToCart,
+        cleanCart,
+        createOrder,
+        payOrder,
+      }}
     >
       {children}
     </CartContext.Provider>

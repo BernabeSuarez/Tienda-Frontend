@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import RootLayout from "./components/Rootlayout";
 import { ShoppingCartProvider } from "./context/CartContext";
 import Payment from "./pages/Payment";
+import SuccessPay from "./pages/SuccessPay";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route element={<RootLayout />}>
                 <Route path="/catalogo" element={<Catalogo />} />
                 <Route path="/payment" element={<Payment />} />
+                <Route path="/succes" element={<SuccessPay />} />
               </Route>
             </Route>
           </Routes>
